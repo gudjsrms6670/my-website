@@ -1,22 +1,202 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>내 홈페이지</title>
-    <style>
-        body { font-family: sans-serif; text-align: center; background: #f0f0f0; }
-        header { background: #333; color: white; padding: 20px; font-size: 24px; }
-        section { padding: 20px; }
-        footer { background: #444; color: white; padding: 10px; }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>내 첫 홈페이지</title>
+  <meta name="description" content="간단하고 빠른 원페이지 홈페이지 템플릿" />
+  <meta property="og:title" content="내 첫 홈페이지" />
+  <meta property="og:description" content="깔끔한 원페이지 템플릿" />
+  <meta property="og:type" content="website" />
+  <meta name="color-scheme" content="light dark" />
+  <style>
+    :root{
+      --bg: #0b1020;         /* 배경 */
+      --panel: #111733;      /* 카드/패널 */
+      --txt: #e8ecff;        /* 기본 텍스트 */
+      --muted: #a8b3d1;      /* 보조 텍스트 */
+      --brand: #6ea8fe;      /* 포인트 색 */
+      --brand-2:#7bffe1;     /* 보조 포인트 */
+      --ring: rgba(110,168,254,.35);
+      --radius: 16px;
+      --shadow: 0 10px 25px rgba(0,0,0,.25);
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f6f8ff; --panel:#ffffff; --txt:#0b1020; --muted:#4b567a; --shadow:0 10px 25px rgba(15,28,62,.08); }
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;font-family: system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", Segoe UI, Roboto, Noto Sans KR, sans-serif;color:var(--txt);background:var(--bg)}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+    /* 헤더 */
+    header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,0));backdrop-filter:saturate(140%) blur(6px)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;gap:10px;align-items:center;font-weight:700;letter-spacing:.3px}
+    .dot{width:12px;height:12px;border-radius:999px;background:conic-gradient(from 180deg, var(--brand), var(--brand-2));box-shadow:0 0 20px var(--ring)}
+    .nav a{opacity:.9}
+    .links{display:flex;gap:18px;align-items:center}
+    .btn{display:inline-block;padding:12px 16px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#001025;font-weight:700}
+    .btn:focus-visible{outline:3px solid var(--ring);outline-offset:2px}
+    .menu{display:none}
+    @media (max-width:780px){
+      .links{display:none}
+      .menu{display:block;background:transparent;border:0;color:var(--txt);font-size:20px}
+      #mobile{display:none;position:absolute;inset:52px 16px auto 16px;background:var(--panel);border-radius:14px;box-shadow:var(--shadow);padding:10px}
+      #mobile a{display:block;padding:12px 10px;border-radius:10px}
+      #mobile a:hover{background:rgba(255,255,255,.06)}
+    }
+    /* 히어로 */
+    .hero{position:relative;padding:86px 0}
+    .bg-grad{position:absolute;inset:-20vh -10vw auto -10vw;height:60vh;background:
+      radial-gradient(1000px 500px at 20% 20%, rgba(110,168,254,.25), transparent 60%),
+      radial-gradient(900px 500px at 80% 30%, rgba(123,255,225,.2), transparent 60%);
+      filter:blur(10px);pointer-events:none}
+    .hero h1{font-size:clamp(32px,6vw,56px);line-height:1.05;margin:0 0 14px}
+    .hero p{font-size:clamp(16px,2.6vw,20px);color:var(--muted);margin:0 0 26px}
+    .cta{display:flex;gap:12px;flex-wrap:wrap}
+    .ghost{border:1px solid rgba(255,255,255,.2);padding:12px 16px;border-radius:12px}
+    /* 섹션 공통 */
+    section{padding:64px 0}
+    h2{font-size:clamp(22px,3.5vw,28px);margin:0 0 18px}
+    .muted{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    @media (max-width:900px){ .grid{grid-template-columns:1fr 1fr} }
+    @media (max-width:640px){ .grid{grid-template-columns:1fr} }
+    .card{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;border:1px solid rgba(255,255,255,.06)}
+    .card h3{margin:0 0 6px;font-size:18px}
+    .badge{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
+    /* 문의 */
+    form{display:grid;gap:12px}
+    input,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:var(--txt)}
+    textarea{min-height:120px;resize:vertical}
+    input:focus,textarea:focus{outline:3px solid var(--ring);border-color:transparent}
+    /* 푸터 */
+    footer{padding:32px 0;border-top:1px solid rgba(255,255,255,.08);color:var(--muted)}
+    .top{position:fixed;right:16px;bottom:16px;border:0;border-radius:999px;padding:12px 14px;background:var(--panel);color:var(--txt);box-shadow:var(--shadow)}
+  </style>
 </head>
 <body>
-    <header>내 첫 홈페이지</header>
-    <section>
-        <h1>환영합니다!</h1>
-        <p>이곳은 내가 직접 만든 사이트입니다 🎉</p>
-    </section>
-    <footer>© 2025 내 홈페이지</footer>
+  <!-- 헤더 -->
+  <header>
+    <div class="container nav">
+      <div class="brand"><span class="dot"></span> <span>My Website</span></div>
+      <nav class="links">
+        <a href="#about">소개</a>
+        <a href="#features">기능</a>
+        <a href="#contact">문의</a>
+        <a class="btn" href="#contact">시작하기</a>
+      </nav>
+      <button class="menu" aria-label="메뉴 열기" onclick="toggleMenu()">☰</button>
+    </div>
+    <div id="mobile" class="container">
+      <a href="#about" onclick="closeMenu()">소개</a>
+      <a href="#features" onclick="closeMenu()">기능</a>
+      <a href="#contact" onclick="closeMenu()">문의</a>
+    </div>
+  </header>
+
+  <!-- 히어로 -->
+  <div class="hero">
+    <div class="bg-grad"></div>
+    <div class="container">
+      <p class="badge">🚀 깔끔한 원페이지 템플릿</p>
+      <h1>코딩 몰라도<br/>예쁜 홈페이지 완성</h1>
+      <p>텍스트만 바꿔도 바로 내 사이트처럼 사용할 수 있어요. GitHub Pages로 무료 호스팅!</p>
+      <div class="cta">
+        <a class="btn" href="#contact">문의하기</a>
+        <a class="ghost" href="#features">기능 살펴보기</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 소개 -->
+  <section id="about">
+    <div class="container">
+      <h2>소개</h2>
+      <p class="muted">이 템플릿은 성능과 가독성, 모바일 최적화를 신경 써서 제작되었습니다. 필요에 따라 섹션을 추가/삭제하세요.</p>
+      <div class="grid" style="margin-top:18px">
+        <div class="card">
+          <h3>반응형 디자인</h3>
+          <p class="muted">모든 기기에서 자동으로 레이아웃이 맞춰져요.</p>
+        </div>
+        <div class="card">
+          <h3>가벼운 한 파일</h3>
+          <p class="muted">외부 프레임워크 없이 HTML/CSS/JS 한 파일로 끝.</p>
+        </div>
+        <div class="card">
+          <h3>무료 호스팅</h3>
+          <p class="muted">GitHub Pages만으로 전 세계 어디서나 접속.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 기능 -->
+  <section id="features">
+    <div class="container">
+      <h2>기능</h2>
+      <div class="grid">
+        <div class="card"><h3>빠른 로딩</h3><p class="muted">이미지 없이도 시각적 재미를 주는 그라디언트/그림자.</p></div>
+        <div class="card"><h3>접근성</h3><p class="muted">키보드 포커스 링, 명확한 대비, 의미 있는 마크업.</p></div>
+        <div class="card"><h3>다크/라이트 자동</h3><p class="muted">시스템 테마에 따라 색이 자동 전환됩니다.</p></div>
+        <div class="card"><h3>부드러운 스크롤</h3><p class="muted">내비게이션 클릭 시 섹션으로 자연스럽게 이동.</p></div>
+        <div class="card"><h3>손쉬운 수정</h3><p class="muted">텍스트만 바꾸면 바로 나만의 페이지.</p></div>
+        <div class="card"><h3>확장 용이</h3><p class="muted">섹션/카드 복사해서 원하는 만큼 추가.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 문의 -->
+  <section id="contact">
+    <div class="container">
+      <h2>문의</h2>
+      <p class="muted">간단한 문의는 아래 폼을 사용하세요. (백엔드 없이 <b>메일</b>로 전송됩니다)</p>
+      <div class="card">
+        <form onsubmit="submitMail(event)">
+          <input id="name" placeholder="이름" required />
+          <input id="email" type="email" placeholder="이메일" required />
+          <textarea id="msg" placeholder="내용을 입력하세요" required></textarea>
+          <button class="btn" type="submit">메일 보내기</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div>© <span id="year"></span> My Website</div>
+      <div class="muted">Made with GitHub Pages</div>
+    </div>
+  </footer>
+
+  <button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
+
+  <script>
+    // 모바일 메뉴
+    const mobile = document.getElementById('mobile');
+    function toggleMenu(){ mobile.style.display = mobile.style.display==='block' ? 'none' : 'block'; }
+    function closeMenu(){ mobile.style.display='none'; }
+    // 부드러운 스크롤
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+    // 연도 자동
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // 메일 전송 (mailto)
+    function submitMail(e){
+      e.preventDefault();
+      const name = encodeURIComponent(document.getElementById('name').value.trim());
+      const email = encodeURIComponent(document.getElementById('email').value.trim());
+      const msg = encodeURIComponent(document.getElementById('msg').value.trim());
+      const subject = `[문의] ${decodeURIComponent(name)}님`;
+      const body = `이름: ${decodeURIComponent(name)}%0A이메일: ${decodeURIComponent(email)}%0A%0A내용:%0A${decodeURIComponent(msg)}`;
+      window.location.href = `mailto:you@example.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+    }
+  </script>
 </body>
 </html>
